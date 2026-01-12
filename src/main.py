@@ -49,8 +49,18 @@ def upload_image(request: UploadRequest):
 
 # ✅ NEW: LIST IMAGES API
 @app.get("/images")
-def get_images(user_id: str | None = None):
-    return list_images(user_id)
+def get_images(
+    user_id: str | None = None,
+    tag: str | None = None,
+    start_date: str | None = None,
+    end_date: str | None = None,
+):
+    return list_images(
+        user_id=user_id,
+        tag=tag,
+        start_date=start_date,
+        end_date=end_date,
+    )
 
 
 @app.get("/images/{image_id}/download")
