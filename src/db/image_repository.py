@@ -20,3 +20,15 @@ def save_image_metadata(user_id: str, s3_key: str, tags: list, description: str)
 
     table.put_item(Item=item)
     return item
+
+
+def list_images(user_id: str | None = None):
+    table = get_dynamodb_resource().Table(TABLE_NAME)
+
+    response = table.scan()
+    items = response.get("Items", [])
+
+    if user_id:
+        items = [item for item in items if item["user_id"] == user_id]
+
+    return items
