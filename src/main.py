@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from src.db.image_repository import get_image_by_id
+from src.utils.s3_utils import generate_download_url
+from fastapi import HTTPException
+
 
 from src.utils.s3_utils import generate_upload_url
 from src.db.image_repository import save_image_metadata, list_images
@@ -45,6 +49,20 @@ def upload_image(request: UploadRequest):
 @app.get("/images")
 def get_images(user_id: str | None = None):
     return list_images(user_id)
+
+
+@app.get("/images/{image_id}/download")
+def download_image(image_id: str):
+    image = get_image_by_id(image_id)
+
+    if not image:
+        raise HTTPException(status_code=404, detail="Image not found")
+
+    download_url = generate_download_url(image["s3_key"])
+
+    return {
+        "download_url": download_url
+    }
 
 
 @app.get("/health")
