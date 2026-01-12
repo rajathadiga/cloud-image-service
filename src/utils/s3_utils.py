@@ -18,3 +18,18 @@ def generate_upload_url(content_type: str):
     )
 
     return url, image_key
+
+
+def generate_download_url(s3_key: str):
+    s3 = get_s3_client()
+
+    url = s3.generate_presigned_url(
+        ClientMethod="get_object",
+        Params={
+            "Bucket": BUCKET_NAME,
+            "Key": s3_key,
+        },
+        ExpiresIn=300,
+    )
+
+    return url
