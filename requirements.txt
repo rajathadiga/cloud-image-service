@@ -1,0 +1,6 @@
+boto3
+fastapi
+uvicorn
+pytest
+moto
+python-multipart
