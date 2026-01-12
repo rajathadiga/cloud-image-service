@@ -32,3 +32,13 @@ def list_images(user_id: str | None = None):
         items = [item for item in items if item["user_id"] == user_id]
 
     return items
+
+
+def get_image_by_id(image_id: str):
+    table = get_dynamodb_resource().Table(TABLE_NAME)
+
+    response = table.get_item(
+        Key={"image_id": image_id}
+    )
+
+    return response.get("Item")
