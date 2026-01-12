@@ -33,3 +33,11 @@ def generate_download_url(s3_key: str):
     )
 
     return url
+
+
+def delete_image_from_s3(s3_key: str):
+    s3 = get_s3_client()
+    s3.delete_object(
+        Bucket=BUCKET_NAME,
+        Key=s3_key
+    )
