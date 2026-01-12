@@ -42,3 +42,10 @@ def get_image_by_id(image_id: str):
     )
 
     return response.get("Item")
+
+def delete_image_metadata(image_id: str):
+    table = get_dynamodb_resource().Table(TABLE_NAME)
+
+    table.delete_item(
+        Key={"image_id": image_id}
+    )
