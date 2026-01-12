@@ -40,6 +40,7 @@ Language: Python 3.11
 
 Project Structure
 
+📁 Project Structure
 cloud-image-service/
 ├── src/
 │   ├── main.py
