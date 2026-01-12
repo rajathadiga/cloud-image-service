@@ -4,6 +4,8 @@ from pydantic import BaseModel
 from src.db.image_repository import get_image_by_id
 from src.utils.s3_utils import generate_download_url
 from fastapi import HTTPException
+from src.db.image_repository import delete_image_metadata
+from src.utils.s3_utils import delete_image_from_s3
 
 
 from src.utils.s3_utils import generate_upload_url
@@ -62,6 +64,21 @@ def download_image(image_id: str):
 
     return {
         "download_url": download_url
+    }
+
+
+@app.delete("/images/{image_id}")
+def delete_image(image_id: str):
+    image = get_image_by_id(image_id)
+
+    if not image:
+        raise HTTPException(status_code=404, detail="Image not found")
+
+    delete_image_from_s3(image["s3_key"])
+    delete_image_metadata(image_id)
+
+    return {
+        "message": "Image deleted successfully"
     }
 
 
