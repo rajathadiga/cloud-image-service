@@ -1,10 +1,10 @@
-📸 Cloud Image Service
+** Cloud Image Service **
 
 A backend service for uploading, listing, downloading, and deleting images using FastAPI, AWS S3 (Presigned URLs), and DynamoDB, with LocalStack for local AWS emulation.
 
 This project demonstrates real-world cloud backend design, where large files are uploaded and downloaded directly via S3, keeping the backend stateless and scalable.
 
-🚀 Features
+** Features **
 
 Upload images using presigned S3 PUT URLs
 
@@ -24,7 +24,7 @@ Clean, modular project structure
 
 Incremental Git commits
 
-🛠 Tech Stack
+** Tech Stack **
 
 Backend Framework: FastAPI (Python)
 
@@ -38,9 +38,8 @@ API Documentation: Swagger (OpenAPI)
 
 Language: Python 3.11
 
-Project Structure
+** Project Structure **
 
-📁 Project Structure
 cloud-image-service/
 ├── src/
 │   ├── main.py
@@ -55,8 +54,8 @@ cloud-image-service/
 ├── requirements.txt
 └── README.md
 
-⚙️ Setup Instructions
-1️⃣ Prerequisites
+** Setup Instructions **
+1. Prerequisites
 
 Python 3.10+
 
@@ -64,18 +63,18 @@ Docker & Docker Desktop
 
 Git
 
-2️⃣ Clone the Repository
+2️. Clone the Repository
 git clone <your-repository-url>
 cd cloud-image-service
 
-3️⃣ Create Virtual Environment
+3️. Create Virtual Environment
 python -m venv venv
 venv\Scripts\activate   # Windows
 
-4️⃣ Install Dependencies
+4️. Install Dependencies
 pip install -r requirements.txt
 
-5️⃣ Start Local AWS (LocalStack)
+5️. Start Local AWS (LocalStack)
 docker-compose up -d
 
 
@@ -83,7 +82,7 @@ Wait until logs show:
 
 Ready.
 
-6️⃣ Initialize AWS Resources
+6️. Initialize AWS Resources
 $env:PYTHONPATH="."
 python -m src.utils.init_resources
 
@@ -94,7 +93,7 @@ S3 bucket
 
 DynamoDB table
 
-7️⃣ Run the Application
+7️. Run the Application
 $env:PYTHONPATH="."
 uvicorn src.main:app --reload
 
@@ -103,8 +102,8 @@ Open Swagger UI:
 
 http://127.0.0.1:8000/docs
 
-🔌 API Walkthrough
-1️⃣ Upload Image (Generate Presigned URL)
+** API Walkthrough **
+1️. Upload Image (Generate Presigned URL)
 
 POST /images/upload
 
@@ -125,14 +124,14 @@ Response:
   "image_id": "uuid"
 }
 
-2️⃣ Upload Image to S3 (Client → S3)
+2️. Upload Image to S3 (Client → S3)
 Invoke-WebRequest `
   -Uri "<upload_url>" `
   -Method PUT `
   -InFile "path/to/image.jpg" `
   -ContentType "image/jpeg"
 
-3️⃣ List Images
+3️. List Images
 
 GET /images
 
@@ -140,7 +139,7 @@ Optional filter:
 
 /images?user_id=user123
 
-4️⃣ Download Image
+4️. Download Image
 
 GET /images/{image_id}/download
 
@@ -150,7 +149,7 @@ Response:
   "download_url": "http://localhost:4566/..."
 }
 
-5️⃣ Delete Image
+5️. Delete Image
 
 DELETE /images/{image_id}
 
@@ -160,7 +159,7 @@ Response:
   "message": "Image deleted successfully"
 }
 
-🧠 Design Decisions
+** Design Decisions **
 
 Presigned URLs are used so large files never pass through the backend
 
