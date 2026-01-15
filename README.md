@@ -161,7 +161,7 @@ Response:
 
 ** Design Decisions **
 
-Presigned URLs are used so large files never pass through the backend
+Presigned URLs are used, so large files never pass through the backend
 
 DynamoDB stores only metadata for scalability
 
